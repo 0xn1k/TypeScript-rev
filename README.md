@@ -1,5 +1,6 @@
 # TypeScript-rev
 
+
 ts-oop-practice/
  ├─ src/
  │   └─ index.ts      # your entry point
@@ -24,3 +25,4 @@ ts-oop-practice/
   "include": ["src"],                 // only compile src/ folder
   "exclude": ["node_modules", "dist"]
 }
+
