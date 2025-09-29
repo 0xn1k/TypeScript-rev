@@ -73,11 +73,11 @@ const setArray : Array<Set<number>> = [
 ];
 console.log(setArray);
 
-const promiseArray : Array<Promise<number>> = [
-    Promise.resolve(1),
-    Promise.resolve(2)
-];
-Promise.all(promiseArray).then(results => console.log(results));
+// const promiseArray : Array<Promise<number>> = [
+//     Promise.resolve(1),
+//     Promise.resolve(2)
+// ];
+// Promise.all(promiseArray).then(results => console.log(results));
 
 const mixedNested : Array<Array<number | string>> = [
     [1, 'one'],
@@ -138,15 +138,15 @@ function greet(name:string):string {
 console.log(greet("World"));
 
 
-async function getFavoriteNumber(): Promise<number> {
-  return 26;
-}
+// async function getFavoriteNumber(): Promise<number> {
+//   return 26;
+// }
 
-let pp = getFavoriteNumber()
-console.log(pp);
-pp.then((value) => {
-  console.log(`My favorite number is ${value}`);
-}); 
+// let pp = getFavoriteNumber()
+// console.log(pp);
+// pp.then((value) => {
+//   console.log(`My favorite number is ${value}`);
+// }); 
 
 
 function printCoordinates(pt:{
@@ -327,6 +327,38 @@ function fn2(b:string):void {
 
 specialGreet(1, fn1, fn2);
 specialGreet(2, fn1, fn2);
+
+console.log("--------------------------------------------------");
+
+type DescribaleFunction = {
+  description : string,
+  errorCode : number,
+  (someArg: number) : boolean,
+  (x:number , y : number , z : string) : string
+}
+
+function doSomething(fn: DescribaleFunction): void {
+  console.log(fn.description + " returned " + fn(6));
+}
+
+function myFunc(someArg: number): boolean;
+function myFunc(x: number, y: number, z: string): string;
+function myFunc(a: number, b?: number, c?: string): boolean | string {
+  if (typeof b === "number" && typeof c === "string") {
+    return `Combined: ${a + b}, ${c}`;
+  }
+  return a > 3;
+} 
+
+myFunc.description = "This function checks if a number is greater than 3";
+myFunc.errorCode = 404;
+
+doSomething(myFunc);
+
+console.log(myFunc);
+console.log(myFunc(5));
+console.log(myFunc.description);
+console.log(myFunc.errorCode);
 
 
 
