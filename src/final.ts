@@ -247,3 +247,205 @@ let newSpeices = new Cat();
 newSpeices.speak();
 // console.log(newSpeices.name); // Error: Property 'name' is protected and only accessible within class 'Species' and its subclasses.
 // newSpeices.makeSound(); // Error: Property 'makeSound' is protected and only accessible within class 'Species' and its subclasses.
+console.log("Revise");
+
+function identity<T>(arg: T): T []{
+    return [arg]
+
+}
+
+const xyz = identity<string>("Hello");
+console.log(xyz);
+
+
+class Model <T> {
+    id: T;
+    constructor(id: T) {
+        this.id = id;
+    }
+}
+
+const model1 = new Model<number>(1);
+console.log(model1.id);
+
+const model2 = new Model<string>("abc");
+console.log(model2.id);
+
+
+
+class Base {
+    pong():void {
+        console.log("Pong from Base");
+    }
+}
+
+class Derived extends Base{
+    
+    constructor(){
+           super();
+        console.log(this.pong());
+    }
+
+    pong(): void {
+        console.log("Pong from Derived");
+    }
+}
+
+const b = new Base();
+b.pong();
+
+const d = new Derived();
+d.pong();
+
+
+class Parent{
+    name : string;
+    age: number;
+
+    constructor(name : string , age : number){
+        this.name = name;
+        this.age = age;
+    }
+
+    info(): string {
+        return `Name: ${this.name}, Age: ${this.age}`;
+    }
+}
+
+class Child extends Parent {
+    school : string;
+    constructor(name : string, age: number , school: string){
+        super(name , age);
+        this.school = school;
+    }
+
+    info(): string {
+        return `${super.info()}, School: ${this.school}`;
+    }
+}
+
+const parent = new Parent("John" , 40);
+console.log(parent.info());
+
+const child = new Child("Alice" , 10 , "Greenwood High");
+console.log(child.info());
+
+
+///// NOTE : typescript uses interfaces in three diffrent ways which can be  ,as  normal object , function and class types
+
+// interface as object type
+interface Product {
+    id :number;
+    name : string;
+    price : number ;
+    tages ?: string[];
+}
+
+let laptop : Product = {
+    id : 10,
+    name: "Laptop",
+    price: 1500,
+    tages: ["Electronics" , "Computers"]
+}
+
+let charger : Product = {
+    id : 20,
+    name: "Charger",
+    price: 50
+}
+
+console.log(laptop);
+console.log(charger);
+
+// interface as function type
+
+interface Logger{
+    (message: string , level ?: "error"| "info"|"debug"):void ;
+}
+
+
+let consolelogger : Logger = (message: string , level: "error" | "info" | "debug" = "info"): void => {
+    let timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] [${level.toUpperCase()}]: ${message}`);
+}
+consolelogger("This is an info message");
+consolelogger("This is an error message" , "error");
+consolelogger("This is a debug message" , "debug");
+
+// interface as class type
+
+interface PaymentProcessor{
+    pay(ammount:number): void ;
+    refund(ammount:number):void ;
+}
+
+class Paypal implements PaymentProcessor{
+    pay(ammount: number): void {
+        console.log(`Paid ${ammount} using Paypal`);
+    }
+    refund(ammount: number): void {
+        console.log(`Refunded ${ammount} using Paypal`);
+    }
+}
+
+class Stripe implements PaymentProcessor{
+    pay(ammount: number): void {
+        console.log(`Paid ${ammount} using Stripe`);
+    }
+    refund(ammount: number): void {
+        console.log(`Refunded ${ammount} using Stripe`);
+    }
+}
+
+let paypal = new Paypal();
+paypal.pay(100);
+paypal.refund(50);
+
+let stripe = new Stripe();
+stripe.pay(200);
+stripe.refund(75);
+
+// interface for class implements with  objct and methods
+
+interface Vehicle{
+    company : string;
+    brand: string;
+    speed : number;
+    start(): void;
+    stop() :void;
+    break() : void;
+}
+
+
+class Car implements Vehicle{
+    company: string;
+    brand: string;
+    speed: number;
+
+    constructor(company: string , brand: string , speed: number){
+        this.company = company;
+        this.brand = brand;
+        this.speed = speed;
+    }
+
+    start(): void {
+        console.log(`${this.brand} car started`);
+    }
+
+    stop(): void {
+        console.log(`${this.brand} car stopped`);
+    }
+
+    break(): void {
+        console.log(`${this.brand} car is breaking`);
+    }
+
+}
+
+let myCar = new Car("Toyota" , "Corolla" , 120);
+console.log(myCar);
+myCar.start();
+myCar.break();
+myCar.stop();
+
+// interface extending another interface
